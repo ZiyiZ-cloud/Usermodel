@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Twitter{% endblock %}
+
+{% block content %}
+<h1>User Profile: {{user.username}}</h1>
+<ul>
+    <li>
+        Username: {{user.username}}
+    </li>
+    <li>
+        Email: {{user.email}}
+    </li>
+    <li>
+        First Name: {{user.first_name}}
+    </li>
+    <li>
+        Last Name: {{user.last_name}}
+    </li>
+
+</ul>
+{% endblock %}
