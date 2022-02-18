@@ -2,30 +2,28 @@
 {% block title %}Twitter{% endblock %}
 
 {% block content %}
-<h1>User Profile: {{user.username}}</h1>
-<form style= 'display:inline' action='/user/{{user.username}}/delete' method='POST'>
-    <button class='btn  btn-sm btn-danger'> Remove User</button>
+<h1>Feedback</h1>
+<p>This is the feedback page!</p>
+
+<form id='feedbacks' method = 'POST'>
+    {{ form.hidden_tag() }}
+
+    {% for field in form 
+        if field.widget.input_type != 'hidden' %}
+        <p>
+            {{field.label}}
+            {{field(class_='form-control')}}
+
+            {% for error in field.errors %}
+            <span class='form-text text-danger'>{{error}}</span>
+            {% endfor %}
+        </p>
+        {% endfor %}
+        <button class = 'btn btn-success' type='submit'>Post Your Feedback</button>
     </form>
-<ul>
-    <li>
-        Username: {{user.username}}
-    </li>
-    <li>
-        Email: {{user.email}}
-    </li>
-    <li>
-        First Name: {{user.first_name}}
-    </li>
-    <li>
-        Last Name: {{user.last_name}}
-    </li>
-</ul>
 
-<h2>Feedbacks</h2>
 <ul>
-    {% for post in feedback %}
-    {% if session['username'] == post.username %}
-
+     {% for post in feedback %}
         <div>
             <div class='card my-2'>
                 <div class='card-body'>
@@ -34,17 +32,14 @@
                     <p class='card-text'>
                         {{post.content}}
                     </p>
-                    <form style= 'display:inline' action='/feedbacks/{{post.id}}/edit' method='POST'>
-                        <button class='btn  btn-sm btn-primary'> Edit</button>
-                        </form>
+                    {% if session['username'] == post.username %}
                     <form style= 'display:inline' action='/feedbacks/{{post.id}}' method='POST'>
                     <button class='btn  btn-sm btn-danger'> Remove</button>
                     </form>
+                    {% endif %}
                 </div>
             </div>
         </div>
-        {% endif %}
-
     {% endfor %}
 </ul>
 
